@@ -20,6 +20,9 @@ class Application
       when "show"
         show_contact
 
+      when "delete"
+        delete_contact
+
       when "quit"
         puts "Goodbye!"
         break
@@ -32,6 +35,7 @@ class Application
     puts "What would you like do next?"
     puts " new    - Create a new contact"
     puts " list   - List all contacts"
+    puts " delete - Delete a contact"
     puts " show   - Display contact details"
     # puts " find   - Find a contact"
     print "> "
@@ -42,25 +46,27 @@ class Application
     name = gets.chomp.split(" ")
     puts "What is your email?"
     email = gets.chomp
-    check_email(name, email)
+    puts "Enter the importance of contact (1 - 5)"
+    importance = gets.chomp.to_i
+    check_email(name, email, importance)
   end
 
-  def check_email(name, email)
+  def check_email(name, email, importance)
     if Contact.find_by email: email
       puts "The email you've entered is already in use"
     else
-      add_contact(name, email)
+      add_contact(name, email, importance)
     end
   end
 
-  def add_contact(name, email)
-    Contact.create(first_name: name[0], last_name: name[1], email: email)
+  def add_contact(name, email, importance)
+    Contact.create(first_name: name[0], last_name: name[1], email: email, importance: importance)
     puts "Your contact has been added!"
   end
 
   def list_contact
     Contact.all.each do |contact|
-      puts "#{contact.id}: #{contact.first_name} #{contact.last_name[0]} #{contact.email}"
+      puts "id #{contact.id}: #{contact.importance} #{contact.first_name} #{contact.last_name[0]} #{contact.email}"
     end
   end
 
@@ -69,6 +75,7 @@ class Application
     id = gets.chomp.to_i
     if Contact.find_by id: id
       contact = Contact.take!
+        puts "importance: #{contact.importance}"
         puts "#{contact.first_name} #{contact.last_name[0]}" 
         puts "#{contact.email}"
 
@@ -85,7 +92,7 @@ class Application
   end
 
   def edit_contact(id)
-    puts "Edit name or email?"
+    puts "Edit name, email or importance?"
     input = gets.chomp
     if input == "back"
       #figure out what the command is to quit. 'show_main_menu' prints 2 times due to loop.
@@ -97,6 +104,9 @@ class Application
 
       when "email"
         edit_email(id)
+
+      when "importance"
+        edit_importance(id)
       end
     end
   end
@@ -138,6 +148,28 @@ class Application
       contact.save
       puts "Your email has been updated"
     end
+  end
+
+  def edit_importance(id)
+    puts "Enter the new importance (1 - 5)"
+    new_importance = gets.chomp.to_i
+    if new_importance == "back"
+      #command to quit
+    else
+      contact = Contact.find(id)
+      contact.importance = new_importance
+      contact.save
+      puts "Your importance level has been updated"
+    end    
+  end
+
+  def delete_contact
+    puts "Enter the ID number of the contact you'd like to delete"
+    id = gets.chomp.to_i
+    Contact.find_by id: id
+    contact = Contact.take!
+    contact.destroy
+    puts "Your contact has been deleted"
   end
  
 end
