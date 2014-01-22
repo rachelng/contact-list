@@ -34,10 +34,10 @@ class Application
   # Prints the main menu only
   def show_main_menu
     puts "What would you like do next?"
-    puts " new      - Create a new contact"
-    puts " list     - List all contacts"
-    puts " show - Display contact details"
-    puts " find - Find a contact"
+    puts " new    - Create a new contact"
+    puts " list   - List all contacts"
+    puts " show   - Display contact details"
+    puts " find   - Find a contact"
     print "> "
   end
 
