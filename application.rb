@@ -65,7 +65,19 @@ class Application
   end
 
   def list_contact
-    Contact.all.each do |contact|
+    puts "Would you like to list by importance?"
+    list = gets.chomp
+    if list == "yes"
+      list_most_importance
+    else
+      Contact.all.each do |contact|
+        puts "id #{contact.id}: #{contact.importance} #{contact.first_name} #{contact.last_name[0]} #{contact.email}"
+      end
+    end
+  end
+
+  def list_most_importance
+      Contact.order("importance ASC").each do |contact|
       puts "id #{contact.id}: #{contact.importance} #{contact.first_name} #{contact.last_name[0]} #{contact.email}"
     end
   end
@@ -73,8 +85,7 @@ class Application
   def show_contact
     puts "Enter the ID number you are looking for"
     id = gets.chomp.to_i
-    if Contact.find_by id: id
-      contact = Contact.take!
+    if contact = Contact.find_by(id:id)
         puts "importance: #{contact.importance}"
         puts "#{contact.first_name} #{contact.last_name[0]}" 
         puts "#{contact.email}"
@@ -166,8 +177,7 @@ class Application
   def delete_contact
     puts "Enter the ID number of the contact you'd like to delete"
     id = gets.chomp.to_i
-    Contact.find_by id: id
-    contact = Contact.take!
+    contact = Contact.find_by(id:id)
     contact.destroy
     puts "Your contact has been deleted"
   end
