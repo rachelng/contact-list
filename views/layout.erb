@@ -1,0 +1,19 @@
+<html>
+	<head>
+	  <title>Contacts List</title>
+	  <% puts request.inspect %>
+	</head>
+
+	<body>
+	  <ul>
+	    <li><a href="/">Contact List</a></li>
+	    <li><a href="/contacts/new">New Contact</a></li>
+	    <% if contact_show_page?  %>
+		    <li><a href="/contacts/<%= @contacts.id %>/edit">Edit Contact</a></li>
+		    <li><%= delete_button(@contacts.id) %></li>
+	    <% end %>
+	  </ul>
+	  <%= yield %>
+	</body>
+
+</html>
