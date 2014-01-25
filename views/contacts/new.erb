@@ -1,20 +1,24 @@
 <h1>New Contact</h1>
-<form action="/contacts" method="post">
-  <label for="first_name">First name:</label><br />
-  <input id="first_name" name="contact[first_name]" type="text" value="<%= @contacts.first_name %>" />
-  <br />
+<form role="form" action="/contacts" method="post">
+  <div class="form-group">
+    <label for="first_name">First name:</label><br />
+    <input id="first_name" name="contact[first_name]" type="text" value="<%= @contacts.first_name %>" />
+  </div>
 
-  <label for="last_name">Last name:</label><br />
-  <input id="last_name" name="contact[last_name]" type="text" value="<%= @contacts.last_name %>" />
-  <br />
+  <div class="form-group">
+    <label for="last_name">Last name:</label><br />
+    <input id="last_name" name="contact[last_name]" type="text" value="<%= @contacts.last_name %>" />
+  </div>
 
-  <label for="email">Email:</label><br />
-  <input id="email" name="contact[email]" type="text" value="<%= @contacts.email %>" />
-  <br />
+  <div class="form-group">
+    <label for="email">Email:</label><br />
+    <input id="email" name="contact[email]" type="text" value="<%= @contacts.email %>" />
+  </div>
 
-  <label for="importance">Importance:</label><br />
-  <input id="importance" name="contact[importance]" type="text" value="<%= @contacts.importance %>" />
-  <br />
+  <div class="form-group">
+    <label for="importance">Importance:</label><br />
+    <input id="importance" name="contact[importance]" type="text" value="<%= @contacts.importance %>" />
+  </div>
 
-  <input type="submit" value="Create Contact" />
+  <button class="btn btn-default" type="submit">Create Contact</button>
 </form>   
